@@ -1,7 +1,6 @@
-const containerForm = document.querySelector('.container-form')
+const form = document.querySelector('.feedback-form')
 
-const form = `<form class="feedback-form" autocomplete="off">
-  <label>
+const formElement = `<label>
     Email
     <input type="email" name="email" autofocus />
   </label>
@@ -9,13 +8,9 @@ const form = `<form class="feedback-form" autocomplete="off">
     Message
     <textarea name="message" rows="8"></textarea>
   </label>
-  <button type="submit">Submit</button>
-</form>
-`;
+  <button type="submit">Submit</button>`;
 
-containerForm.innerHTML = form;
-
-const formElement = document.querySelector('.feedback-form');
+form.innerHTML = formElement;
 
 const localStorageKey = "feedback-form-state";
 
@@ -25,17 +20,17 @@ const formData = JSON.parse(localStorage.getItem(localStorageKey)) || {
     message: ""
 };
 
-formElement.elements.email.value = formData.email;
-formElement.elements.message.value = formData.message;
+form.elements.email.value = formData.email;
+form.elements.message.value = formData.message;
 
 
-formElement.addEventListener('input', (event) => {
+form.addEventListener('input', (event) => {
     const { name, value } = event.target;
     formData[name] = value.trim();
     localStorage.setItem(localStorageKey, JSON.stringify(formData));
 });
 
-formElement.addEventListener('submit', (event) => {
+form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     if (!formData.email || !formData.message) {
@@ -45,7 +40,7 @@ formElement.addEventListener('submit', (event) => {
 
     console.log(formData);
     localStorage.removeItem(localStorageKey);
-    formElement.reset();
+    form.reset();
 
     formData.email = "";
     formData.message = "";
